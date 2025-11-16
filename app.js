@@ -21,21 +21,30 @@ const meals = [
     { name: "Tacos", img: "images/Tacos.jpg" },
 ];
 
+const weekdays = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+
 document.getElementById("generate").addEventListener("click", () => {
     const container = document.getElementById("meal-container");
     container.innerHTML = "";
 
-    const selected = shuffle([...meals]).slice(0, 7); // 7 Menüs für die Woche
+    // Shuffle meals and pick 7
+    const selected = shuffle([...meals]).slice(0,7);
 
-    selected.forEach(meal => {
+    weekdays.forEach((day, index) => {
+        const dayDiv = document.createElement("div");
+        dayDiv.classList.add("weekday");
+        dayDiv.textContent = day;
+
         const card = document.createElement("div");
         card.classList.add("card");
+        const meal = selected[index];
 
         card.innerHTML = `
             <img src="${meal.img}" alt="${meal.name}">
             <h3>${meal.name}</h3>
         `;
 
+        container.appendChild(dayDiv);
         container.appendChild(card);
     });
 });
@@ -43,3 +52,4 @@ document.getElementById("generate").addEventListener("click", () => {
 function shuffle(array) {
     return array.sort(() => Math.random() - 0.5);
 }
+
